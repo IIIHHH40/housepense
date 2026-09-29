@@ -5,9 +5,8 @@ import java.util.*;
 public class GetStatus {
     public static List<DailyTotal> loadDailyTotals(String jdbcUrl,String user,String pass,String userId){
         List<DailyTotal> list=new ArrayList<>();
-        //あとでDB接続の練習をしてみる
         String sql="""
-                SELECT DATE(created_at) As day, SUM(amount) AS total
+                SELECT DATE(CONVERT_TZ(created_at,'+00:00'+'09:00')) As day, SUM(amount) AS total
                 FROM expenses
                 WHERE user_id=?
                 GROUP BY day
@@ -25,7 +24,7 @@ public class GetStatus {
                 }
             }
         }catch (SQLException e){
-            throw new RuntimeException("失敗", e);
+            throw new RuntimeException("Load daily totals failed", e);
         }
         return list;
     }
