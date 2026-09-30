@@ -9,7 +9,7 @@ public class JdbcUtil {
         String username=json.getString("username");
         String password=json.getString("password");
         int port=json.getInt("port");
-        return new DbConfig(host,port,username,password,dbname);
+        return new DbConfig(host,port,dbname,username,password);
     }
     //JavaオブジェクトからJDBC URLを生成
     public static String createJdbcUrl(DbConfig config){
