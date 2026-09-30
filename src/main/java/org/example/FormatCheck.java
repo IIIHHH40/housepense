@@ -7,7 +7,7 @@ public class FormatCheck{
         if (text==null || text.isBlank()){
             return FormatStatus.invalid("入力が空です。例:1200 食費 めも");
         }
-        String[] parts=text.split("(?U)\\s+");
+        String[] parts=split(text);
         //金額とカテゴリは必須
         if (parts.length<2){
             return FormatStatus.invalid("フォーマットが正しくありません。例:1200 食費 めも");
@@ -23,5 +23,9 @@ public class FormatCheck{
             return FormatStatus.invalid("金額は0~10000000の範囲で入力してください");
         }
         return FormatStatus.valid();
+    }
+    //Handlerとロジックを統一させるためにメソッドを切り離す。
+    public static  String[]  split(String text){
+        return text.split("(?U)\\s+");
     }
 }
