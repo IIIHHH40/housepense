@@ -8,7 +8,7 @@ public class SecretsUtil {
     public static String getSecret(String secretName){
         System.out.println("SecretsUtil:building client");
         SecretsManagerClient client=SecretsManagerClient.builder()
-                .regiont(software.amazon.awssdk.regions.Region.AP_NORTHEAST_1).build();
+                .region(software.amazon.awssdk.regions.Region.AP_NORTHEAST_1).build();
         System.out.println("SecretsUtil:client built");
         GetSecretValueRequest request=GetSecretValueRequest.builder().secretId(secretName).build();
 
