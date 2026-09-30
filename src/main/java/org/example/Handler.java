@@ -1,9 +1,15 @@
 package org.example;
 
-import javax.naming.Context;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.util.List;
 import java.util.Map;
 
-public class Handler implements RequestHandler<Map<String,String>,String>{
+
+public class Handler implements RequestHandler<Map<String,Object>,String>{
     @Override
     public String handleRequest(Map<String, Objet>, input, Context context){
         try{
@@ -27,13 +33,7 @@ public class Handler implements RequestHandler<Map<String,String>,String>{
             String text=message.getString("text");
             context.getLogger().log("userId:"+userId);
             context.getLogger().log("text:"+text);
-            FormatStatus status=FormatCheck.check(text);
-            if(!status.ok()){
-                replyToken(replyToken,status.message(),context);
-                return "OK";
-            }
-
-            if("グラフ".equals(text)){`
+            if("グラフ".equals(text)){
                 String secretJson=SecretUtil.getSecret("household-secret");
                 DbCOnfig config=JdbcUtil.parseSecret(secretJson);
                 String jdbcUrl=JdbcUtil.createJdbcUrl(config);
@@ -47,9 +47,14 @@ public class Handler implements RequestHandler<Map<String,String>,String>{
                 replyToke(replyToken,graphText,context);
                 return "Ok";
             }
+            FormatStatus status=FormatCheck.check(text);
+            if(!status.ok()){
+                replyToken(replyToken,status.message(),context);
+                return "OK";
+            }
+
             else{
-                //ここも矛盾してない？\\S+にしな2つ以上のスペースでエラーになない？
-                String[] parts=text.split(" ");
+                String[] parts=FormatCheck.split(text);
                 int amount=Integer.parseInt(parts[0]);
                 String category=parts[1];
                 String memo=(parts.length>=3) ? parts[2]:"";
@@ -105,7 +110,7 @@ public class Handler implements RequestHandler<Map<String,String>,String>{
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
             conn.setRequestProperty("Content-Type","application/json");
-            conn.setRequestProperty("Authorization","Bearer"+channelAccessToken);
+            conn.setRequestProperty("Authorization","Bearer "+channelAccessToken);
             org.json.JSONObject json=new org.json.JSONObject();
             org.json.JSONObject msgObj=new org.json.JSONObject();
             msgObj.put("type","text");
