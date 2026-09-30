@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class Handler implements RequestHandler<Map<String,Object>,String>{
     @Override
-    public String handleRequest(Map<String, Objet>, input, Context context){
+    public String handleRequest(Map<String, Object>  input, Context context){
         try{
             context.getLogger().log("Input:"+input);
             String body=(String)input.get("body");
@@ -125,8 +125,8 @@ public class Handler implements RequestHandler<Map<String,Object>,String>{
             int status=conn.getResponseCode();
             context.getLogger().log("LINE reply status:"+status);
         }catch(Exception e){
-            context.getLogger().log(("LINE reply error: "+e)
+            context.getLogger().log("LINE reply error: "+e);
         }
     }
 }
-}
+
