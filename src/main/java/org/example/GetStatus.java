@@ -6,7 +6,7 @@ public class GetStatus {
     public static List<DailyTotal> loadDailyTotals(String jdbcUrl,String user,String pass,String userId){
         List<DailyTotal> list=new ArrayList<>();
         String sql="""
-                SELECT DATE(CONVERT_TZ(created_at,'+00:00'+'09:00')) As day, SUM(amount) AS total
+                SELECT DATE(CONVERT_TZ(created_at, '+00:00', '+09:00')) As day, SUM(amount) AS total
                 FROM expenses
                 WHERE user_id=?
                 GROUP BY day
