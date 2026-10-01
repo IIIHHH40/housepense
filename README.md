@@ -49,15 +49,19 @@ erDiagram
 ```
 ユーザごとにデータを分離している
 ## Lambdaの機能
-DailyTotal.java:[日付、その日の支出の合計金額]を1セットにまとめるデータ型を定義
-DbAccess.java:SQLにアクセスし、支出情報をINSERTする
-DbConfig.java:データベース接続に必要な情報を1つにまとめて管理する
-GetStatus.java:SQLから日別の支出合計を取得する
-Handler.java:LINEのメッセージをJSONから取り出し、メインの処理を行う。
-JdbcUtil.java:JavaオブジェクトからJDBC用のURLを作る
-SecretsUtil.java:AWS Secrets Managerから秘密情報(DBのパスワードなど)を取り出してくる
-FormatStatus.java:フォーマットの情報を保持
-FormatCheck.java:フォーマットがあっているか確認
+### DailyTotal.java:[日付、その日の支出の合計金額]を1セットにまとめるデータ型を定義
+
+### DbAccess.java:SQLにアクセスし、支出情報をINSERTする
+
+### DbConfig.java:データベース接続に必要な情報を1つにまとめて管理する
+
+### GetStatus.java:SQLから日別の支出合計を取得する
+
+### Handler.java:LINEのメッセージをJSONから取り出し、メインの処理を行う。
+### JdbcUtil.java:JavaオブジェクトからJDBC用のURLを作る
+### SecretsUtil.java:AWS Secrets Managerから秘密情報(DBのパスワードなど)を取り出してくる
+### FormatStatus.java:フォーマットの情報を保持
+### FormatCheck.java:フォーマットがあっているか確認
 ## Lambdaのメイン処理
 1.API GatewayからのWebhook JSONを受け取る
 2.Messageからtextを取り出す
